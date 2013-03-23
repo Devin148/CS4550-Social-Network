@@ -3,6 +3,10 @@
 require_once("config.php");
 include("connect.php");
 
+if (!isset($_POST["email"]) || !isset($_POST["password"])) {
+    header("Location: index.php");
+}
+
 $email = $_POST["email"];
 $pass = $_POST["password"];
 
