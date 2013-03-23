@@ -4,11 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Northeastern Social</title>
     <script src="js/form.js" type="text/javascript"></script>
+    <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
 </head>
 
 <body>
-    <form action="login.php" method="post" name="login" onsubmit="return false">
-
+    <form action="login.php" method="post" name="login" id="login">
         <table>
             <tr>
                 <td>Email:</td>
@@ -19,16 +19,17 @@
                 <td><input name="password" type="password" size="15" maxlength="100" /></td>
             </tr>
             <tr>
-                <td><a href="javascript:doSubmit()">Submit</a></td>
+                <td><input type="submit" value="Submit" /></td>
             </tr>
 
         </table>
     </form>
 
     <script>
-    function doSubmit() {
-        document.login.submit();
-    }
+    $("#login").submit(function () {
+        return checkEmpty("login");
+    });
+
     </script>
 
 </body>
