@@ -12,14 +12,14 @@
         <table>
             <tr>
                 <td>Email:</td>
-                <td><input name="email" type="text" size="15" maxlength="100" /></td>
+                <td><input name="email" id="email" type="text" size="15" maxlength="100" /></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input name="password" type="password" size="15" maxlength="100" /></td>
+                <td><input name="password" id="password" type="password" size="15" maxlength="100" /></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Submit" /></td>
+                <td><input type="submit" id="submit" value="Submit" /></td>
             </tr>
 
         </table>
@@ -27,7 +27,7 @@
 
     <script>
     $("#login").submit(function () {
-        return checkEmpty("login");
+        return checkEmpty("login") && isEmail($("input#email").val());
     });
 
     </script>
