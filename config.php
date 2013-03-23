@@ -1,6 +1,8 @@
 <?php
 
-$mysqli = new mysqli("localhost","local_user","local_pass");
-if ($mysqli->connect_errno) {
-    echo ("Failed to connect to db: " . $mysqli->connect_error);
-}
+define("MYSQL_HOST", "localhost");
+define("MYSQL_USER", "local_user");
+define("MYSQL_PASS", "local_pass");
+define("MYSQL_DB", "social_network");
+
+define("SALT" , "X3fGDs9#1");
