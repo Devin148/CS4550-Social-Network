@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form action="login.php" method="post" name="login" onsubmit="return validateLogin()">
+    <form action="login.php" method="post" name="login" onsubmit="return false">
 
         <table>
             <tr>
@@ -18,10 +18,18 @@
                 <td>Password:</td>
                 <td><input name="password" type="password" size="15" maxlength="100" /></td>
             </tr>
-        </table>
+            <tr>
+                <td><a href="javascript:doSubmit()">Submit</a></td>
+            </tr>
 
-        <input id="submit" type="submit" value="Submit" />
+        </table>
     </form>
+
+    <script>
+    function doSubmit() {
+        document.login.submit();
+    }
+    </script>
 
 </body>
 </html>
