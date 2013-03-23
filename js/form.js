@@ -1,11 +1,11 @@
-function checkEmpty(formId) {
+function isFormEmpty(formId) {
     var valid = true;
     $("#" + formId + " :text, :password").each(function() {
         if ($(this).val() == null || $(this).val() == '') {
             valid = false;
         }
     });
-    return valid;
+    return !valid;
 }
 
 function isEmpty(string) {

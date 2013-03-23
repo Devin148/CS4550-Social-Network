@@ -27,7 +27,7 @@
 
     <script>
     $("#login").submit(function () {
-        return checkEmpty("login") && isEmail($("input#email").val());
+        return !isFormEmpty("login") && isEmail($("input#email").val());
     });
 
     </script>
