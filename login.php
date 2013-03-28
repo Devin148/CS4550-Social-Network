@@ -30,6 +30,9 @@ if ($stmt = $mysqli->prepare("SELECT EXISTS(SELECT 1 FROM users WHERE email=? AN
 
     if ($exists) {
         print "Logged in.";
+        session_start();
+        $_SESSION["logged_in"] = 1;
+        $_SESSION["email"] = $email;
     } else {
         print "No user with that email and password found.";
     }

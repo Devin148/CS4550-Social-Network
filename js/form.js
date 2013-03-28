@@ -1,4 +1,22 @@
+function validate(formId) {
+    // If the form isn't filled out, return false
+    if (!isFormFilled(formId)) {
+        return false;
+    }
+
+    // If it is filled, validate all emails
+    var valid = true;
+    $("#" + formId + " #email").each(function() {
+        valid = isEmail($(this).val());
+    });
+
+    // Then validate all dates
+
+}
+
 // Is the form, with formId, not empty?
+// Returns  true if the form is completely filled out
+//          false if any element is left blank
 function isFormFilled(formId) {
     var valid = true;
     $("#" + formId + " :text, :password, select").each(function() {

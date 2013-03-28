@@ -1,4 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+session_start();
+// If the session vars are set
+if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
+    // And if logged_in is set to 1
+    if ($_SESSION["logged_in"] == 1) {
+        // Redirect the user to their newsfeed
+        header("Location: newsfeed.php");
+    }
+}
+// Otherwise load the page as normal
+?>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -149,6 +162,11 @@
                 </td>
             </tr>
             <tr>
+                <!-- // TODO: Validate zip code matches state/city? -->
+                <td>Zip Code:</td>
+                <td><input name="zip" id="zip" type="text" size="15" maxlength="100" /></td>
+            </tr>
+            <tr>
                 <td><input type="submit" id="submit" value="Submit" /></td>
             </tr>
 
@@ -161,7 +179,7 @@
 
     // Validate form
     $("#create").submit(function () {
-        return isFormFilled("create") && isEmail($("input#email").val());
+        return isFormFilled("create") && isEmail($("#email").val());
     });
     </script>
 
