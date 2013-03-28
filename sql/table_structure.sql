@@ -12,7 +12,6 @@ CREATE TABLE users
 CREATE TABLE address
 (
 	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	num int NOT NULL,
 	street varchar(255) NOT NULL,
 	city varchar(255) NOT NULL,
 	state varchar(255) NOT NULL,

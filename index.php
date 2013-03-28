@@ -25,6 +25,8 @@
         </table>
     </form>
 
+    <p><a href="register.php">Register</a></p>
+
     <script>
     $("#login").submit(function () {
         return isFormFilled("login") && isEmail($("input#email").val());
