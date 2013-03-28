@@ -7,6 +7,7 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     if ($_SESSION["logged_in"] == 1) {
         // Redirect the user to their newsfeed
         header("Location: newsfeed.php");
+        exit();
     }
 }
 // Otherwise load the page as normal

@@ -17,6 +17,7 @@ if (!isset($_POST["first"]) ||
     !isset($_POST["state"]) ||
     !isset($_POST["zip"])) {
     header("Location: register.php");
+    exit();
 }
 
 // Assemble the variables
