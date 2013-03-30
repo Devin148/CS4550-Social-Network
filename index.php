@@ -17,37 +17,42 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Northeastern Social</title>
-    <script src="js/form.js" type="text/javascript"></script>
-    <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <form action="login.php" method="post" name="login" id="login">
-        <table>
-            <tr>
-                <td>Email:</td>
-                <td><input name="email" id="email" type="text" size="15" maxlength="100" /></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input name="password" id="password" type="password" size="15" maxlength="100" /></td>
-            </tr>
-            <tr>
-                <td><input type="submit" id="submit" value="Submit" /></td>
-            </tr>
+    <div id="floater"></div>
+    <div id="content_wrapper">
+        <div id="content">
+            <div class="sub_content small left red">
+                <h2>Connect</h2>
+                <p>With friends from Northeastern</p>
 
-        </table>
-    </form>
+                <h2>Establish</h2>
+                <p>A strong network with your colleagues</p>
 
-    <p><a href="register.php">Register</a></p>
+                <h2>Learn</h2>
+                <p>About exciting co-ops opportunities</p>
 
-    <script>
-    // Validate form
-    $("#login").submit(function () {
-        return isFormFilled("login") && isEmail($("#email").val());
-    });
+                <h2>Share</h2>
+                <p>Your experiences and passions</p>
+            </div>
 
-    </script>
+            <div class="sub_content large right">
+                <h1>Welcome to the</h1>
+                <h1 class="strong">Northeastern</h1>
+                <h1>Social Network</h1>
+
+                <a href="login_form.php" class="button red grey">Login</a>
+                <a href="register.php" class="button red red">Sign Up</a>
+            </div>
+            <div class="clear"></div>
+
+        </div>
+    </div>
+
+    <div id="footer">
+    </div>
 
 </body>
 </html>

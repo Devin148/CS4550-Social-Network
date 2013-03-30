@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+session_start();
+// If the session vars are set
+if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
+    // And if logged_in is set to 1
+    if ($_SESSION["logged_in"] == 1) {
+        // Redirect the user to their newsfeed
+        header("Location: newsfeed.php");
+        exit();
+    }
+}
+// Otherwise load the page as normal
+?>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Northeastern Social</title>
+    <script src="js/form.js" type="text/javascript"></script>
+    <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <form action="login.php" method="post" name="login" id="login">
+        <table>
+            <tr>
+                <td>Email:</td>
+                <td><input name="email" id="email" type="text" size="15" maxlength="100" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input name="password" id="password" type="password" size="15" maxlength="100" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" id="submit" value="Submit" /></td>
+            </tr>
+
+        </table>
+    </form>
+
+    <p><a href="register.php">Register</a></p>
+
+    <script>
+    // Validate form
+    $("#login").submit(function () {
+        return isFormFilled("login") && isEmail($("#email").val());
+    });
+
+    </script>
+
+</body>
+</html>
