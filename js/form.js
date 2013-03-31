@@ -19,7 +19,10 @@ function validate(formId) {
 //          false if any element is left blank
 function isFormFilled(formId) {
     var valid = true;
-    $("#" + formId + " :text, :password, select").each(function() {
+    var query = "#" + formId + " :text," +
+                "#" + formId + " :password," + 
+                "#" + formId + " select";
+    $(query).each(function() {
         if ($(this).val() == null || $(this).val() == '') {
             valid = false;
         }

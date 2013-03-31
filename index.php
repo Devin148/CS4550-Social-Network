@@ -18,6 +18,8 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Northeastern Social</title>
     <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <script src="js/form.js" type="text/javascript"></script>
+    <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -38,21 +40,59 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
                 <p>Your experiences and passions</p>
             </div>
 
-            <div class="sub_content large right">
+            <div id="welcome" class="sub_content large right">
                 <h1>Welcome to the</h1>
                 <h1 class="strong">Northeastern</h1>
                 <h1>Social Network</h1>
 
-                <a href="login_form.php" class="button red grey">Login</a>
-                <a href="register.php" class="button red red">Sign Up</a>
+                <a href="#" id="login_button" class="large button grey">Login</a>
+                <a href="#" id="sign_up_button" class="large button red">Sign Up</a>
             </div>
-            <div class="clear"></div>
 
+            <div id="login" class="sub_content large right hidden">
+                <?php include ("login_form.php"); ?>
+            </div>
+
+            <div id="sign_up" class="sub_content large right hidden">
+                <?php include ("registration_form.php"); ?>
+            </div>
+
+            <div class="clear"></div>
         </div>
     </div>
 
     <div id="footer">
     </div>
+
+    <script>
+    // When the document is ready
+    $(document).ready(function () {
+        // Change to the login menu
+        $("#login_button").click(function () {
+            $("#welcome").fadeOut("fast");
+            $("#login").delay(300).fadeIn("fast");
+        });
+
+        // Change to the registration menu
+        $("#sign_up_button").click(function () {
+            $("#welcome").fadeOut("fast");
+            $("#sign_up").delay(300).fadeIn("fast");
+        });
+
+        // Add years to the registration form
+        addYears("year");
+
+        // Validate login form
+        $("#login_form").submit(function () {
+            return isFormFilled("login_form") && isEmail($("#login_form #email").val());
+        });
+
+        // Validate registration form
+        $("#registration_form").submit(function () {
+            return isFormFilled("registration_form") && isEmail($("#registration_form #email").val());
+        });
+    });
+    </script>
 
 </body>
 </html>

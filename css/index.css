@@ -48,9 +48,11 @@ body {
     border-radius: 5px;
 }
 
-.small { width: 300px; }
+.sub_content.small { width: 300px; }
 
-.large { width: 500px; }
+.sub_content.large { width: 500px; }
+
+.hidden { display: none; }
 
 .left {	float: left; }
 
@@ -95,7 +97,18 @@ p {
     border-radius: 5px;
     margin-top: 20px;
     margin-right: 40px;
+    padding: 0 15px;
+}
+
+.button.large {
     padding: 10px 25px;
+}
+
+.button.small {
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 10px;
+    border-bottom: 2px;
 }
 
 .button.red {
