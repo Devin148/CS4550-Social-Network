@@ -17,7 +17,7 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Northeastern Social</title>
-    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/welcome.css" rel="stylesheet" type="text/css" />
     <script src="js/form.js" type="text/javascript"></script>
     <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
 </head>
