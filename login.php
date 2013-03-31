@@ -41,3 +41,6 @@ if ($stmt = $mysqli->prepare("SELECT EXISTS(SELECT 1 FROM users WHERE email=? AN
     print "Failed to create prepared statement (" . $mysqli->errno . ") " . $mysqli->error;
     exit();
 }
+
+// Close the connection
+$mysqli->close();

@@ -86,3 +86,6 @@ if ($stmt = $mysqli->prepare("INSERT INTO users (email, password, dob, first_nam
 } else {
     print "Failed to create user prepared statement (" . $mysqli->errno . ") " . $mysqli->error;
 }
+
+// Close the connection
+$mysqli->close();
