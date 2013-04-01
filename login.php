@@ -11,6 +11,8 @@ if (!isset($_POST["email"]) || !isset($_POST["password"])) {
 $email = $_POST["email"];
 $pass = $_POST["password"];
 
+$hash = crypt($pass, SALT);
+
 if ($stmt = $mysqli->prepare("SELECT EXISTS(SELECT 1 FROM users WHERE email=? AND password=?)")) {
     $stmt->bind_param('ss', $email, $hash);
     $stmt->execute();
