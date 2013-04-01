@@ -18,7 +18,10 @@ CREATE TABLE address
 	city varchar(255) NOT NULL,
 	state varchar(255) NOT NULL,
 	zip varchar(255) NOT NULL,
-	UNIQUE(street, city, state, zip)
+	UNIQUE(street),
+	UNIQUE(city),
+	UNIQUE(state),
+	UNIQUE(zip)
 );
 
 CREATE TABLE friends_with
