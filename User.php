@@ -4,6 +4,8 @@
 // User class to represent a row in the users table
 //
 class User {
+	private $id;
+
 	private $email;
 	private $first_name;
 	private $last_name;
@@ -27,12 +29,13 @@ class User {
 		include ("connect.php");
 
 		// Find the user and fill in the vars
-		if ($stmt = $mysqli->prepare("SELECT dob, first_name, last_name, address FROM users WHERE email=?")) {
+		if ($stmt = $mysqli->prepare("SELECT id, dob, first_name, last_name, address FROM users WHERE email=?")) {
 		    $stmt->bind_param('s', $this->email);
 		    $stmt->execute();
-		    $stmt->bind_result($dob, $first_name, $last_name, $address_id);
+		    $stmt->bind_result($id, $dob, $first_name, $last_name, $address_id);
 		    
 		    if ($stmt->fetch()) {
+		    	$this->id = $id;
 		    	$this->first_name = $first_name;
 		    	$this->last_name = $last_name;
 		    	$this->dob = $dob;
@@ -70,6 +73,11 @@ class User {
 
 		// Close the connection
 		$mysqli->close();
+	}
+
+	// Return the user id
+	public function getId() {
+		return $this->id;
 	}
 
 	// Return the email of this user
