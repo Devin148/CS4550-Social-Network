@@ -40,5 +40,43 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 
     ?>
 
+    <form action="javascript:alert('Sucess!')" name="status_form" id="status_form">
+        <table>
+            <tr>
+                <td>Status:</td>
+                <td>
+                    <textarea cols="40" rows="5" name="status" id="status">Write something...</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" id="submit" value="Submit" /></td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+    // When the document is ready
+    $(document).ready(function () {
+        // Validate status form
+        $("#status_form").submit(function () {
+            if (!isEmpty($("#status").val())) {
+                var result = false;
+                // Add the status through an ajax request to the php file
+                $.ajax({
+                    type:  "POST",
+                    url:   "add_status.php",
+                    data:  "status=" + $("#status").val(),
+                    async: false
+                }).done (function (ret) {
+                    if (ret == "true") {
+                        result = true;
+                    }
+                });
+            }
+            return result;
+        });
+    });
+    </script>
+
 </body>
 </html>
