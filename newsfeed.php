@@ -3,14 +3,17 @@
 session_start();
 // If the session vars are set
 if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
-    // And if logged_in is set to 1
-    if ($_SESSION["logged_in"] == 1) {
-        // Redirect the user to their newsfeed
-        header("Location: newsfeed.php");
+    // And if logged_in is set to 0
+    if ($_SESSION["logged_in"] == 0) {
+        // Redirect them to the login page
+        header("Location: index.php");
         exit();
     }
+// If the vars aren't set, to the login page they go
+} else {
+    header("Location: index.php");
+    exit();
 }
-// Otherwise load the page as normal
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,6 +26,19 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 </head>
 
 <body>
+
+    <?php
+
+    include ("functions.php");
+    $email = $_SESSION["email"];
+    $user = getUser($email);
+
+    $first_name = $user->getFirstName();
+    $last_name = $user->getLastName();
+
+    print "<h1> Welcome $first_name $last_name!</h1>";
+
+    ?>
 
 </body>
 </html>
