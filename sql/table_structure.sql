@@ -35,6 +35,7 @@ CREATE TABLE status
 	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	author int NOT NULL,
 	content varchar(255) NOT NULL,
+	time timestamp DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (author) REFERENCES users (id)
 );
 
