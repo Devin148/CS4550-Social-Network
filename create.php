@@ -49,6 +49,8 @@ if ($stmt = $mysqli->prepare("INSERT INTO address (street, city, state, zip)
         // If it fails, the address already exists
         // Probably bad form, I'd like to redo this when there's time
     }
+
+    // Close the statement
     $stmt->close();
 } else {
     print "Failed to create address prepared statement (" . $mysqli->errno . ") " . $mysqli->error;
@@ -64,6 +66,8 @@ if ($stmt = $mysqli->prepare("SELECT ID FROM address
     // Bind the address id to var $address_id
     $stmt->bind_result($address_id);
     $stmt->fetch();
+
+    // Close the statement
     $stmt->close();
 } else {
     print "Failed to create address_id prepared statement (" . $mysqli->errno . ") " . $mysqli->error;
@@ -82,6 +86,8 @@ if ($stmt = $mysqli->prepare("INSERT INTO users (email, password, dob, first_nam
         // Probably bad form, I'd like to redo this when there's time
         print "User with that email already exists.<br/>";
     }
+
+    // Close the statement
     $stmt->close();
 } else {
     print "Failed to create user prepared statement (" . $mysqli->errno . ") " . $mysqli->error;

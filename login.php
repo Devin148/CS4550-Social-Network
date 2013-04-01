@@ -30,6 +30,9 @@ if ($stmt = $mysqli->prepare("SELECT EXISTS(SELECT 1 FROM users WHERE email=? AN
     } else {
         print "No user with that email and password found.";
     }
+
+    // Close the statement
+    $stmt->close();
 } else {
     print "Failed to create prepared statement (" . $mysqli->errno . ") " . $mysqli->error;
     exit();
