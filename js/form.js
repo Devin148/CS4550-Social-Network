@@ -25,6 +25,11 @@ function isFormFilled(formId) {
     $(query).each(function() {
         if ($(this).val() == null || $(this).val() == '') {
             valid = false;
+            // Alter background to signify there's an error
+            $(this).css("background-color", "#F00");
+            $(this).stop().animate({
+                backgroundColor: "#FFF"
+            });
         }
     });
     return valid;

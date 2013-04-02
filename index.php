@@ -20,6 +20,7 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     <link href="css/welcome.css" rel="stylesheet" type="text/css" />
     <script src="js/form.js" type="text/javascript"></script>
     <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
 </head>
 
 <body>
