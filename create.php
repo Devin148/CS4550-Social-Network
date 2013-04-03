@@ -51,6 +51,7 @@ if ($stmt = $mysqli->prepare("INSERT INTO address (street, city, state, zip)
     } else {
         // If it fails, the address already exists
         // Probably bad form, I'd like to redo this when there's time
+        echo $mysqli->error;
     }
 
     // Close the statement
@@ -83,11 +84,18 @@ if ($stmt = $mysqli->prepare("INSERT INTO users (email, password, dob, first_nam
                               VALUES (?, ?, ?, ?, ?, ?)")) {
     $stmt->bind_param('sssssi', $email, $hash, $mysqldate, $first, $last, $address_id);
     if ($stmt->execute()) {
-        print "User created.<br/>";
+        // Start the session and add some vars
+        session_start();
+        $_SESSION["logged_in"] = 1;
+        $_SESSION["email"] = $email;
+
+        // Redirect the user to the newsfeed with their new account
+        header("Location: newsfeed.php");
     } else {
         // If it fails, a user with that email already exists
         // Probably bad form, I'd like to redo this when there's time
         print "User with that email already exists.<br/>";
+        print $mysqli->error;
     }
 
     // Close the statement
