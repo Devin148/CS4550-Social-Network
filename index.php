@@ -85,19 +85,37 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 
         // Validate login form
         $("#login_form").submit(function () {
-            return isFormFilled("login_form") && isEmail($("#login_form #email").val());
+            if (!isFormFilled("login_form")) {
+                return false;
+            }
+            if (!isEmail($("#login_form #email").val())) {
+                alert ("Please enter a valid email!");
+                return false;
+            }
+            return true;
         });
 
         // Validate registration form
         $("#registration_form").submit(function () {
+            if (!isFormFilled("registration_form")) {
+                return false;
+            }
+            if (!isEmail($("#registration_form #email").val())) {
+                alert ("Please enter a valid email!");
+                return false;
+            }
+            if (!isZip($("#registration_form #zip").val())) {
+                alert ("Please enter a valid zip code!");
+                return false;
+            }
             var day = $("#registration_form #day").val();
             var month = $("#registration_form #month").val();
             var year = $("#registration_form #year").val();
-
-            return isFormFilled("registration_form") &&
-                   isEmail($("#registration_form #email").val()) &&
-                   isZip($("#registration_form #zip").val()) &&
-                   isOldEnough(day, month, year);
+            if (!isOldEnough(day, month, year)) {
+                alert ("You must be at least 18 to sign up!");
+                return false;
+            }
+            return true;
         });
     });
     </script>
