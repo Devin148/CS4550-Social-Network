@@ -17,14 +17,10 @@ class User {
 	private $state;
 	private $zip;
 
-	// Give the constructor an email
-	function __construct($email) {
+	public function createUserFromEmail($email) {
+		//Set the global email
 		$this->email = $email;
-		$this->createUser();
-	}
 
-	// Hidden helper
-	private function createUser() {
 		// Connect to the db
 		include ("connect.php");
 
@@ -36,6 +32,60 @@ class User {
 		    
 		    if ($stmt->fetch()) {
 		    	$this->id = $id;
+		    	$this->first_name = $first_name;
+		    	$this->last_name = $last_name;
+		    	$this->dob = $dob;
+		    	$this->address_id = $address_id;
+		    } else {
+		    	// Throw exception
+		    }
+
+		    // Close the statement
+		    $stmt->close();
+		} else {
+			// Throw exception
+		}
+
+		// Find the address and fill in the vars
+		if ($stmt = $mysqli->prepare("SELECT street, city, state, zip FROM address WHERE id=?")) {
+		    $stmt->bind_param('i', $this->address_id);
+		    $stmt->execute();
+		    $stmt->bind_result($street, $city, $state, $zip);
+		    
+		    if ($stmt->fetch()) {
+		    	$this->street = $street;
+		    	$this->city = $city;
+		    	$this->state = $state;
+		    	$this->zip = $zip;
+		    } else {
+		    	// Throw exception
+		    }
+
+		    // Close the statement
+		    $stmt->close();
+		} else {
+			// Throw exception
+		}
+
+		// Close the connection
+		$mysqli->close();
+	}
+
+	public function createUserFromId($id) {
+		//Set the global id
+		$this->id = $id;
+
+		// Connect to the db
+		include ("connect.php");
+
+		// Find the user and fill in the vars
+		if ($stmt = $mysqli->prepare("SELECT email, dob, first_name, last_name, address FROM users WHERE id=?")) {
+		    $stmt->bind_param('s', $this->id);
+		    $stmt->execute();
+		    $stmt->bind_result($email, $dob, $first_name, $last_name, $address_id);
+		    
+		    if ($stmt->fetch()) {
+		    	$this->email = $email;
 		    	$this->first_name = $first_name;
 		    	$this->last_name = $last_name;
 		    	$this->dob = $dob;
