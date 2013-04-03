@@ -37,7 +37,7 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     $first_name = $user->getFirstName();
     $last_name = $user->getLastName();
 
-    print "<h1> Welcome $first_name $last_name!</h1>";
+    print "<h1> Welcome $first_name $last_name!</h1><br /><br />";
 
     ?>
 
@@ -54,6 +54,52 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
             </tr>
         </table>
     </form>
+
+    <br /><br /> <!-- Ugh br's -->
+
+    <?php
+
+    // Connect to the db
+    include ("connect.php");
+
+    // Find the user and fill in the vars
+    if ($stmt = $mysqli->prepare("SELECT content, author, time FROM status
+                                  WHERE author IN (SELECT friend FROM friends_with WHERE user=?)
+                                        OR author=?
+                                  ORDER BY time desc")) {
+        $stmt->bind_param('ss', $user->getId(), $user->getId());
+        $stmt->execute();
+        $stmt->bind_result($content, $author_id, $time);
+        
+        $i = 0;
+        while ($stmt->fetch() && $i<=25) {
+            $i++;
+
+            // TODO: method to lookup user by id
+            // $author = getUser($author_id);
+            // $author_name = $author->getFirstName() . " " .
+            //                $author->getLastName();
+            ?>
+
+            <hr />
+            <p><?php echo $content; ?></p>
+            <p><?php echo $author_id; ?> at <?php echo $time; ?></p>
+
+            <?php
+        }
+
+        // Close the statement
+        $stmt->close();
+    } else {
+        // Throw exception
+        print "Sorry, not gonna work.";
+    }
+
+    // Close the connection
+    $mysqli->close();
+
+    ?>
+
 
     <script>
     // When the document is ready
