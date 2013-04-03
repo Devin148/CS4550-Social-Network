@@ -1,16 +1,3 @@
-CREATE TABLE users
-(
-	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	email varchar(255) NOT NULL,
-	password varchar(255) NOT NULL,
-	dob date NOT NULL,
-	first_name varchar(255) NOT NULL,
-	last_name varchar(255) NOT NULL,
-	address int NOT NULL,
-	FOREIGN KEY (address) REFERENCES address(id),
-	UNIQUE(email)
-);
-
 CREATE TABLE address
 (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -22,6 +9,19 @@ CREATE TABLE address
 	UNIQUE(city),
 	UNIQUE(state),
 	UNIQUE(zip)
+);
+
+CREATE TABLE users
+(
+	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	email varchar(255) NOT NULL,
+	password varchar(255) NOT NULL,
+	dob date NOT NULL,
+	first_name varchar(255) NOT NULL,
+	last_name varchar(255) NOT NULL,
+	address int NOT NULL,
+	FOREIGN KEY (address) REFERENCES address(id),
+	UNIQUE(email)
 );
 
 CREATE TABLE friends_with
