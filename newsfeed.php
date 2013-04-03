@@ -33,6 +33,7 @@ $email = $_SESSION["email"];
 
     <div id="navbar">
         <ul>
+            <li><a href="navbar.php">Home</a></li>
             <li><a href="settings.php">Settings</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
@@ -43,7 +44,7 @@ $email = $_SESSION["email"];
         <div id="sidebar">
             <img src="images/default_profile.png" />
             <ul>
-                <li><a <?php echo "href=\"profile.png?email=$email\""; ?>>Profile</a></li>
+                <li><a <?php echo "href=\"profile.php?email=$email\""; ?>>Profile</a></li>
                 <li><a href="messages.png">Messages</a></li>
                 <li><a href="friends.png">Friends</a></li>
                 <li><a href="coops.png">Co-ops</a></li>
