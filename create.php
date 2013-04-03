@@ -37,6 +37,9 @@ $zip = $_POST["zip"];
 $date = new DateTime($month . " " . $day . "," . $year);
 $mysqldate = $date->format("Y-m-d H:i:s");
 
+// Create hashed pass
+$hash = crypt($pass, SALT);
+
 //
 // Insert address
 //
