@@ -98,14 +98,15 @@ $email = $_SESSION["email"];
                 while ($stmt->fetch() && $i<=25) {
                     $i++;
 
-                    // TODO: method to lookup user by id
-                    // $author = getUser($author_id);
-                    // $author_name = $author->getFirstName() . " " .
-                    //                $author->getLastName();
+                    // Create a User for the author
+                    $author = getUserFromId($author_id);
+                    $author_name = $author->getFirstName() . " " .
+                                   $author->getLastName();
+                    $author_email = $author->getEmail();
                     ?>
 
                     <p><?php echo $content; ?></p>
-                    <p><?php echo $author_id; ?> at <?php echo $time; ?></p>
+                    <p><?php echo "<a href=\"profile.php?email=$author_email\">$author_name</a>"; ?> at <?php echo $time; ?></p>
                     <hr />
 
                     <?php
