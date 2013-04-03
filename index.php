@@ -90,7 +90,14 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 
         // Validate registration form
         $("#registration_form").submit(function () {
-            return isFormFilled("registration_form") && isEmail($("#registration_form #email").val());
+            var day = $("#registration_form #day").val();
+            var month = $("#registration_form #month").val();
+            var year = $("#registration_form #year").val();
+
+            return isFormFilled("registration_form") &&
+                   isEmail($("#registration_form #email").val()) &&
+                   isZip($("#registration_form #zip").val()) &&
+                   isOldEnough(day, month, year);
         });
     });
     </script>

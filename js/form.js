@@ -46,6 +46,79 @@ function isEmail(email) {
     return re.test(email) ? true : false;
 }
 
+// Is the provided zip code valid?
+function isZip(zip) {
+    var valid = true;
+    for (var i = 0; i < zip.length; i++) {
+        if (isNaN(zip.charAt(i))) {
+            valid = false;
+        }
+    }
+    return valid && (zip.length == 5);
+}
+
+// Does the provided date make the user old enough to sign
+// up for the site? (18 years or older)
+function isOldEnough(day, month, year) {
+    var currentTime = new Date();
+    var currentYear = currentTime.getFullYear();
+    var diff = currentYear - year;
+
+    if (diff > 18) {
+        return true;
+    } else if (diff < 18) {
+        return false;
+    } else { // difference is 18
+        var currentMonth = currentTime.getMonth() + 1;
+        month = getNumberMonth(month);
+        if (month > currentMonth) {
+            return false;
+        } else if (month < currentMonth) {
+            return true;
+        } else { // Months are the same
+            var currentDay = currentTime.getDate();
+            if (day > currentDay) {
+                return false;
+            } else if (day < currentDay || day == currentDay) {
+                return true;
+            }
+        }
+    }
+
+    //Some sort of fall through
+    return false;
+}
+
+// Given the name of a month, return the number
+function getNumberMonth(month) {
+    switch (month) {
+        case "January":
+            return 1;
+        case "February":
+            return 2;
+        case "March":
+            return 3;
+        case "April":
+            return 4;
+        case "May":
+            return 5;
+        case "June":
+            return 6;
+        case "July":
+            return 7;
+        case "August":
+            return 8;
+        case "September":
+            return 9;
+        case "October":
+            return 10;
+        case "November":
+            return 11;
+        case "December":
+            return 12;
+    }
+}
+
 // Add the past 100 years into a <select> element
 function addYears(selectId) {
     // Generate Years
