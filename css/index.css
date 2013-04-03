@@ -1,5 +1,194 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+
 html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
+}
+
+body {
+    background: #FFF;
+    color: #111;
+    font-family: "Droid Sans", sans-serif;
+}
+
+#content_wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+#sidebar {
+    background: #222;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+    float: left;
+    padding: 0;
+}
+
+#sidebar img {
+    width: 175px;
+    height: 175px;
+    margin: 10px;
+    border: none;
+}
+
+#sidebar ul {
+    background: #222;
+    -moz-border-radius: 0 0 7px 7px;
+    -webkit-border-radius: 0 0 7px 7px;
+    border-radius: 0 0 7px 7px;
+    color: #777;
+    font-size: 14px;
+    list-style: none;
+    text-align: left;
+    margin: 0 auto;
+    padding: 0;
+}
+             
+#sidebar a:link,
+#sidebar a:visited,
+#sidebar a:active {
+    display: block;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #777;
+    font-size: 18px;
+    text-decoration: none;
+    line-height: 50px;
+    height: 50px;
+    padding: 0;
+    padding-left: 45px;
+}
+
+#sidebar a:hover {
+    background: #333;
+    color: #FFF;
+    text-decoration: none;
+}
+
+#content {
+    width: 700px;
+    float: right;
+}
+
+h1 {
+    color: #cd2027;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+h2 {
+    color: #cd2027;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+h3 {
+    color: #dd6d72;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+p {
+    padding: 5px 0;
+    margin: 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.button {
+    display: inline-block;
+    font-size: 24px;
+    line-height: 50px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 40px;
+    padding: 0 15px;
+}
+
+.button.large {
+    padding: 10px 25px;
+}
+
+.button.small {
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 10px;
+    border-bottom: 2px;
+}
+
+.button.red {
+    color: #FFF;
+    background: #cd2027;
+    border-bottom: 5px solid #b81c22;
+}
+
+.button.grey {
+    color: #666;
+    background: #e8e8e8;
+    border-bottom: 5px solid #cfcfcf;
+}
+
+.button.black {
+    color: #e8e8e8;
+    background: #333333;
+    border-bottom: 5px solid #2d2d2d;
+}
+
+a.button:link,
+a.button:visited,
+a.button:active,
+a.button:hover {
+    text-decoration: none;
+}
+
+a.button.red:hover,
+a.button.red:active {
+    background: #b81c22;
+    border-bottom: 5px solid #a8191f;
+}
+
+a.button.grey:hover,
+a.button.grey:active {
+    background: #FFF;
+    border-bottom: 5px solid #ebebeb;
+}
+
+a.button.black:hover,
+a.button.black:active {
+    background: #2d2d2d;
+    border-bottom: 5px solid #252525;
+}
+
+a:link,
+a:visited,
+a:active {
+    color: #cd2027;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #b81c22;
+    text-decoration: underline;
 }

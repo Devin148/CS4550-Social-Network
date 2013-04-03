@@ -13,6 +13,8 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     header("Location: index.php");
     exit();
 }
+
+$email = $_SESSION["email"];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -21,6 +23,7 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Northeastern Social</title>
     <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/navbar.css" rel="stylesheet" type="text/css" />
     <script src="js/form.js" type="text/javascript"></script>
     <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
@@ -28,78 +31,101 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 
 <body>
 
-    <?php
+    <div id="navbar">
+        <ul>
+            <li><a href="settings.php">Settings</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
 
-    include ("functions.php");
-    $email = $_SESSION["email"];
-    $user = getUser($email);
+    <div id="content_wrapper">
+        <div id="sidebar">
+            <img src="images/default_profile.png" />
+            <ul>
+                <li><a <?php echo "href=\"profile.png?email=$email\""; ?>>Profile</a></li>
+                <li><a href="messages.png">Messages</a></li>
+                <li><a href="friends.png">Friends</a></li>
+                <li><a href="coops.png">Co-ops</a></li>
+        </div>
 
-    $first_name = $user->getFirstName();
-    $last_name = $user->getLastName();
-
-    print "<h1> Welcome $first_name $last_name!</h1><br /><br />";
-
-    ?>
-
-    <form action="javascript:alert('Sucess!')" name="status_form" id="status_form">
-        <table>
-            <tr>
-                <td>Status:</td>
-                <td>
-                    <textarea cols="40" rows="5" name="status" id="status">Write something...</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="submit" id="submit" value="Submit" /></td>
-            </tr>
-        </table>
-    </form>
-
-    <br /><br /> <!-- Ugh br's -->
-
-    <?php
-
-    // Connect to the db
-    include ("connect.php");
-
-    // Find the user and fill in the vars
-    if ($stmt = $mysqli->prepare("SELECT content, author, time FROM status
-                                  WHERE author IN (SELECT friend FROM friends_with WHERE user=?)
-                                        OR author=?
-                                  ORDER BY time desc")) {
-        $stmt->bind_param('ss', $user->getId(), $user->getId());
-        $stmt->execute();
-        $stmt->bind_result($content, $author_id, $time);
-        
-        $i = 0;
-        while ($stmt->fetch() && $i<=25) {
-            $i++;
-
-            // TODO: method to lookup user by id
-            // $author = getUser($author_id);
-            // $author_name = $author->getFirstName() . " " .
-            //                $author->getLastName();
-            ?>
-
-            <hr />
-            <p><?php echo $content; ?></p>
-            <p><?php echo $author_id; ?> at <?php echo $time; ?></p>
+        <div id="content">
 
             <?php
-        }
 
-        // Close the statement
-        $stmt->close();
-    } else {
-        // Throw exception
-        print "Sorry, not gonna work.";
-    }
+            include ("functions.php");
+            $email = $_SESSION["email"];
+            $user = getUser($email);
 
-    // Close the connection
-    $mysqli->close();
+            $first_name = $user->getFirstName();
+            $last_name = $user->getLastName();
 
-    ?>
+            print "<h1> Welcome $first_name $last_name!</h1><br /><br />";
 
+            ?>
+
+            <form action="javascript:alert('Sucess!')" name="status_form" id="status_form">
+                <table>
+                    <tr><td>Status:</td></tr>
+                    <tr>
+                        <td>
+                            <textarea cols="40" rows="5" name="status" id="status">Write something...</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" id="submit" value="Submit" /></td>
+                    </tr>
+                </table>
+            </form>
+
+            <br /><br /> <!-- Ugh br's -->
+
+            <?php
+
+            // Connect to the db
+            include ("connect.php");
+
+            // Find the user and fill in the vars
+            if ($stmt = $mysqli->prepare("SELECT content, author, time FROM status
+                                          WHERE author IN (SELECT friend FROM friends_with WHERE user=?)
+                                                OR author=?
+                                          ORDER BY time desc")) {
+                $stmt->bind_param('ss', $user->getId(), $user->getId());
+                $stmt->execute();
+                $stmt->bind_result($content, $author_id, $time);
+                
+                $i = 0;
+                while ($stmt->fetch() && $i<=25) {
+                    $i++;
+
+                    // TODO: method to lookup user by id
+                    // $author = getUser($author_id);
+                    // $author_name = $author->getFirstName() . " " .
+                    //                $author->getLastName();
+                    ?>
+
+                    <p><?php echo $content; ?></p>
+                    <p><?php echo $author_id; ?> at <?php echo $time; ?></p>
+                    <hr />
+
+                    <?php
+                }
+
+                // Close the statement
+                $stmt->close();
+            } else {
+                // Throw exception
+                print "Sorry, not gonna work.";
+            }
+
+            // Close the connection
+            $mysqli->close();
+
+            ?>
+
+        </div>
+        <div class="clear"></div>
+    </div>
 
     <script>
     // When the document is ready

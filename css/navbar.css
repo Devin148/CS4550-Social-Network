@@ -1,0 +1,36 @@
+#navbar {
+    width: 960px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#navbar ul {
+    background: #222;
+    -moz-border-radius: 0 0 7px 7px;
+    -webkit-border-radius: 0 0 7px 7px;
+    border-radius: 0 0 7px 7px;
+    color: #777;
+    font-size: 14px;
+    float: right;
+    list-style: none;
+    text-align: center;
+    margin: 0 auto;
+    padding: 5px 10px;
+}
+           
+#navbar li {
+    float: left;
+    padding: 0 10px;
+}
+             
+#navbar a:link,
+#navbar a:visited,
+#navbar a:active {
+    color: #777;
+    text-decoration: none;
+}
+
+#navbar a:hover {
+    color: #FFF;
+    text-decoration: none;
+}
