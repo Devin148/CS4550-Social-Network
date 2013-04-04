@@ -52,7 +52,7 @@ $email = $_SESSION["email"];
 
             ?>
 
-            <form action="javascript:alert('Sucess!')" name="status_form" id="status_form">
+            <form action="newsfeed.php" name="status_form" id="status_form">
                 <table>
                     <tr><td>Status:</td></tr>
                     <tr>
