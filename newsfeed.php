@@ -31,24 +31,11 @@ $email = $_SESSION["email"];
 
 <body>
 
-    <div id="navbar">
-        <ul>
-            <li><a href="navbar.php">Home</a></li>
-            <li><a href="settings.php">Settings</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
-    </div>
+    <?php include ("navbar.php"); ?>
     <div class="clear"></div>
 
     <div id="content_wrapper">
-        <div id="sidebar">
-            <img src="images/default_profile.png" />
-            <ul>
-                <li><a <?php echo "href=\"profile.php?email=$email\""; ?>>Profile</a></li>
-                <li><a href="messages.png">Messages</a></li>
-                <li><a href="friends.png">Friends</a></li>
-                <li><a href="coops.png">Co-ops</a></li>
-        </div>
+        <?php include ("sidebar.php"); ?>
 
         <div id="content">
 

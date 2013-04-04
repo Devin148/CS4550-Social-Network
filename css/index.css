@@ -15,6 +15,7 @@ body {
 #content_wrapper {
     width: 960px;
     margin: 0 auto;
+    margin-top: 25px;
 }
 
 #sidebar {
@@ -71,6 +72,57 @@ body {
 }
 
 #content {
+    width: 700px;
+    float: right;
+}
+
+#content.full {
+    width: 960px;
+}
+
+#profile_head {
+    background: none;
+    position: relative;
+    color: #e8e8e8;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #999;
+    -webkit-box-shadow: 0 3px 3px -3px rgba(0, 0, 0, .60);;
+    -moz-box-shadow: 0 3px 3px -3px rgba(0, 0, 0, .60);;
+    box-shadow: 0 3px 3px -3px rgba(0, 0, 0, .60);;
+    width: 960px;
+    margin-bottom: 50px;
+    padding: 10px;
+}
+
+#profile_head img {
+    width: 175px;
+    height: 175px;
+    border: none;
+    float: left;
+}
+
+#profile_head .info {
+    background: rgba(0, 0, 0, .60);
+    width: 700px;
+    margin: 0 15px;
+    padding: 15px;
+    float: right;
+}
+
+#friends {
+    background: #222;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+    float: left;
+    padding: 0;
+}
+
+#statuses {
     width: 700px;
     float: right;
 }
