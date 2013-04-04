@@ -76,6 +76,24 @@ body {
     float: right;
 }
 
+#people {
+    background: #333;
+    padding: 10px;
+    color: #777;
+}
+
+#people a:link,
+#people a:visited{
+    color: #999;
+    text-decoration: none;
+}
+
+#people a:hover,
+#people a:active {
+    color: #FFF;
+    text-decoration: underline;
+}
+
 #content.full {
     width: 960px;
 }

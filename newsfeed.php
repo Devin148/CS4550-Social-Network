@@ -68,6 +68,44 @@ $email = $_SESSION["email"];
 
             <br /><br /> <!-- Ugh br's -->
 
+            <div id="people">
+                <h2>People you may know:</h2>
+                <?php
+
+                // Connect to the db
+                include ("connect.php");
+
+                // Find the user and fill in the vars
+                if ($stmt = $mysqli->prepare("SELECT first_name, last_name, email
+                                              FROM users ORDER BY RAND() LIMIT 3")) {
+                    $stmt->execute();
+                    $stmt->bind_result($rand_first, $rand_last, $rand_email);
+                    
+                    while ($stmt->fetch()) {
+
+                        ?>
+
+                        <p><?php echo "<a href=\"profile.php?email=$rand_email\">$rand_first $rand_last</a>"; ?></p>
+
+                        <?php
+                    }
+
+                    // Close the statement
+                    $stmt->close();
+                } else {
+                    // Throw exception
+                    print "Failed to find random users.";
+                }
+
+                // Close the connection
+                $mysqli->close();
+
+                ?>
+
+            </div>
+
+            <br /><br />
+
             <?php
 
             // Connect to the db
@@ -95,7 +133,7 @@ $email = $_SESSION["email"];
                     $twitter_content = "$author_name via NEU Social: $content";
                     $facebook_content = "http://www.swimmfrog.com/social/profile.php?email=$author_email";
                     ?>
-                    
+
                     <p><?php echo $content; ?></p>
                     <p><?php echo "<a href=\"profile.php?email=$author_email\">$author_name</a>"; ?> at <?php echo $time; ?></p>
                     <p>
@@ -113,7 +151,7 @@ $email = $_SESSION["email"];
                 $stmt->close();
             } else {
                 // Throw exception
-                print "Sorry, not gonna work.";
+                print "Failed to load statuses.";
             }
 
             // Close the connection
