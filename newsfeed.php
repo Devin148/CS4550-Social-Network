@@ -91,10 +91,19 @@ $email = $_SESSION["email"];
                     $author_name = $author->getFirstName() . " " .
                                    $author->getLastName();
                     $author_email = $author->getEmail();
-                    ?>
 
+                    $twitter_content = "$author_name via NEU Social: $content";
+                    $facebook_content = "http://www.swimmfrog.com/social/profile.php?email=$author_email";
+                    ?>
+                    
                     <p><?php echo $content; ?></p>
                     <p><?php echo "<a href=\"profile.php?email=$author_email\">$author_name</a>"; ?> at <?php echo $time; ?></p>
+                    <p>
+                        <a onClick="window.open('http://twitter.com/home?status=<?php echo $twitter_content; ?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');"
+                        href="javascript: void(0)"><img src="images/buttons/twitter.png" /></a>
+                        <a onClick="window.open('http://www.facebook.com/share.php?u=<?php echo $facebook_content; ?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');"
+                        href="javascript: void(0)"><img src="images/buttons/facebook.png" /></a>
+                    </p>
                     <hr />
 
                     <?php
