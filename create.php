@@ -51,7 +51,7 @@ if ($stmt = $mysqli->prepare("INSERT INTO address (street, city, state, zip)
     } else {
         // If it fails, the address already exists
         // Probably bad form, I'd like to redo this when there's time
-        echo $mysqli->error;
+        // echo $mysqli->error;
     }
 
     // Close the statement
