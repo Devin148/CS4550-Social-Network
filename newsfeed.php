@@ -122,7 +122,44 @@ $email = $_SESSION["email"];
 
         <!-- Third column -->
         <div id="right_content">
-        </div>
+            <h3>People you may know</h3>
+
+            <div class="friend_grid">
+                <?php
+
+                // Connect to the db
+                include ("connect.php");
+
+                // Find the user and fill in the vars
+                if ($stmt = $mysqli->prepare("SELECT first_name, last_name, email
+                                              FROM users ORDER BY RAND() LIMIT 20")) {
+                    $stmt->execute();
+                    $stmt->bind_result($rand_first, $rand_last, $rand_email);
+                    
+                    while ($stmt->fetch()) {
+
+                        ?>
+
+                        <div class="square">
+                            <?php echo "<a href=\"profile.php?email=$rand_email\"><img src=\"images/default_profile.png\" /></a>"; ?>
+                            <span class="tooltip"><?php echo $rand_first . " " . $rand_last; ?></span>
+                        </div>
+
+                        <?php
+                    }
+
+                    // Close the statement
+                    $stmt->close();
+                } else {
+                    // Throw exception
+                    print "Failed to find random users.";
+                }
+
+                // Close the connection
+                $mysqli->close();
+
+                ?>
+            </div>
 
         <!-- Clear the floats -->
         <div class="clear"></div>
