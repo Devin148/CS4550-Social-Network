@@ -119,18 +119,34 @@ $id = $user->getId();
                     <h2><?php echo $street . " " . $city . ", " . $state; ?></h2>
                 </div>
                 <div id="stats">
-                    <ul>
-                        <li>
-                            <div class="fui-man-24"></div>
-                            <?php echo numFriends($id); ?></li>
-                        <li>
-                            <div class="fui-heart-24"></div>
-                        </li>
-                        <li>
-                            <div class="fui-new-24"></div>
-                            <?php echo numStatuses($id); ?>
-                        </li>
-                    </ul>
+                    <?php if ($visible) { ?>
+                        <ul>
+                            <li>
+                                <div class="fui-man-24"></div>
+                                <?php echo numFriends($id); ?></li>
+                            <li>
+                                <div class="fui-heart-24"></div>
+                            </li>
+                            <li>
+                                <div class="fui-new-24"></div>
+                                <?php echo numStatuses($id); ?>
+                            </li>
+                            <?php if(!$your_profile) { ?>
+                                <li class="unfollow">
+                                    <form action="profile.php" name="deletefriend" id="deletefriend">
+                                        <input type="hidden" name="email" <?php echo "value=\"$profile_email\""; ?> />
+                                        <input type="submit" name="deletefriend" value="Unfollow">
+                                    </form>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    <?php } else { ?>
+                        <form action="profile.php" name="addfriend" id="addfriend">
+                            <input type="hidden" name="email" <?php echo "value=\"$profile_email\""; ?> />
+                            <input type="submit" name="addfriend" value="Follow">
+                        </form>
+                    <?php } ?>
+
                 </div>
                 <div class="clear"></div>
             </div>
@@ -140,5 +156,60 @@ $id = $user->getId();
 
         <div class="clear"></div>
     </div>
+
+    <script>
+    // When the document is ready
+    $(document).ready(function () {
+        // The form with id="addfriend" is submitted
+        $("#addfriend").submit(function () {
+            var result = false;
+
+            // Convert php var to js
+            <?php
+            $json_friend_id = json_encode($user->getId());
+            echo "var friend_id = $json_friend_id;";
+            ?>
+
+            // Submit the friend request via ajax
+            $.ajax({
+                type:  "POST",
+                url:   "add_friend.php",
+                data: "friend_id=" + friend_id,
+                async: false
+            }).done (function (ret) {
+                if (ret == "true") {
+                    result = true;
+                }
+            });
+
+            return result;
+        });
+
+        // And the form with id="deletefriend" is submitted
+        $("#deletefriend").submit(function () {
+            var result = false;
+
+            // Convert php var to js
+            <?php
+            $json_friend_id = json_encode($user->getId());
+            echo "var friend_id = $json_friend_id;";
+            ?>
+
+            // Submit the friend request via ajax
+            $.ajax({
+                type:  "POST",
+                url:   "delete_friend.php",
+                data: "friend_id=" + friend_id,
+                async: false
+            }).done (function (ret) {
+                if (ret == "true") {
+                    result = true;
+                }
+            });
+
+            return result;
+        });
+    });
+    </script>
 </body>
 </html>
