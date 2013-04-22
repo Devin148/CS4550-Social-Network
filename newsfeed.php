@@ -23,7 +23,6 @@ $email = $_SESSION["email"];
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Northeastern Social</title>
     <link href="css/index.css" rel="stylesheet" type="text/css" />
-    <link href="css/navbar.css" rel="stylesheet" type="text/css" />
     <script src="js/form.js" type="text/javascript"></script>
     <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
@@ -31,95 +30,45 @@ $email = $_SESSION["email"];
 
 <body>
 
-    <?php include ("navbar.php"); ?>
-    <div class="clear"></div>
+    <?php
 
-    <div id="content_wrapper">
+        include ("functions.php");
+        $email = $_SESSION["email"];
+        $user = getUser($email);
+
+    ?>
+
+    <div id="container">
+        <?php include ("navbar.php"); ?>
         <?php include ("sidebar.php"); ?>
 
-        <div id="content">
+        <div id="middle_content">
 
-            <?php
-
-            include ("functions.php");
-            $email = $_SESSION["email"];
-            $user = getUser($email);
-
-            $first_name = $user->getFirstName();
-            $last_name = $user->getLastName();
-
-            print "<h1> Welcome $first_name $last_name!</h1><br /><br />";
-
-            ?>
-
-            <form action="newsfeed.php" name="status_form" id="status_form">
-                <table>
-                    <tr><td>Status:</td></tr>
-                    <tr>
-                        <td>
-                            <textarea cols="40" rows="5" name="status" id="status">Write something...</textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" id="submit" value="Submit" /></td>
-                    </tr>
-                </table>
-            </form>
-
-            <br /><br /> <!-- Ugh br's -->
-
-            <div id="people">
-                <h2>People you may know:</h2>
-                <?php
-
-                // Connect to the db
-                include ("connect.php");
-
-                // Find the user and fill in the vars
-                if ($stmt = $mysqli->prepare("SELECT first_name, last_name, email
-                                              FROM users ORDER BY RAND() LIMIT 3")) {
-                    $stmt->execute();
-                    $stmt->bind_result($rand_first, $rand_last, $rand_email);
-                    
-                    while ($stmt->fetch()) {
-
-                        ?>
-
-                        <p><?php echo "<a href=\"profile.php?email=$rand_email\">$rand_first $rand_last</a>"; ?></p>
-
-                        <?php
-                    }
-
-                    // Close the statement
-                    $stmt->close();
-                } else {
-                    // Throw exception
-                    print "Failed to find random users.";
-                }
-
-                // Close the connection
-                $mysqli->close();
-
-                ?>
-
+            <!-- Add the status box -->
+            <div id="status_box_wrapper">
+                <form action="newsfeed.php" name="status_form" id="status_form">
+                    <div contenteditable="true" id="status_box">How's life?</div>
+                    <input type="submit" id="submit" value="Submit" />
+                </form>
             </div>
 
-            <br /><br />
-
+            <!-- Start adding statuses -->
             <?php
 
             // Connect to the db
             include ("connect.php");
 
-            // Find the user and fill in the vars
+            // Select all the statuses of people the user is friends with
             if ($stmt = $mysqli->prepare("SELECT content, author, time FROM status
                                           WHERE author IN (SELECT friend FROM friends_with WHERE user=?)
                                                 OR author=?
-                                          ORDER BY time desc")) {
+                                          ORDER BY time desc
+                                          LIMIT 0, 25")) {
                 $stmt->bind_param('ss', $user->getId(), $user->getId());
                 $stmt->execute();
                 $stmt->bind_result($content, $author_id, $time);
                 
+                // Double check we're only grabbing the first 25
                 $i = 0;
                 while ($stmt->fetch() && $i<=25) {
                     $i++;
@@ -134,15 +83,26 @@ $email = $_SESSION["email"];
                     $facebook_content = "http://www.swimmfrog.com/social/profile.php?email=$author_email";
                     ?>
 
-                    <p><?php echo $content; ?></p>
-                    <p><?php echo "<a href=\"profile.php?email=$author_email\">$author_name</a>"; ?> at <?php echo $time; ?></p>
-                    <p>
+                    <!-- Create a status block for them -->
+                    <div class="status_wrapper">
+                        <div class="profile">
+                            <?php echo "<a href=\"profile.php?email=$author_email\">"?>
+                                <img src="images/default_profile.png">
+                            </a>
+                        </div>
+                        <div class="status_top">
+                            <p><?php echo $content; ?></p>
+                        </div>
+                        <div class="status_bot">
+                            <p>Posted from Boston, MA at <?php echo $time; ?></p>
+                        </div>
+                    </div>
+                    <!-- <p>
                         <a onClick="window.open('http://twitter.com/home?status=<?php echo $twitter_content; ?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');"
                         href="javascript: void(0)"><img src="images/buttons/twitter.png" /></a>
                         <a onClick="window.open('http://www.facebook.com/share.php?u=<?php echo $facebook_content; ?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');"
                         href="javascript: void(0)"><img src="images/buttons/facebook.png" /></a>
-                    </p>
-                    <hr />
+                    </p> -->
 
                     <?php
                 }
@@ -150,31 +110,53 @@ $email = $_SESSION["email"];
                 // Close the statement
                 $stmt->close();
             } else {
-                // Throw exception
-                print "Failed to load statuses.";
+                // Some sort of error occured
+                print "<h1>Failed to load statuses.</h1>";
             }
 
             // Close the connection
             $mysqli->close();
 
             ?>
-
         </div>
+
+        <!-- Third column -->
+        <div id="right_content">
+        </div>
+
+        <!-- Clear the floats -->
         <div class="clear"></div>
+        </div>
     </div>
 
     <script>
     // When the document is ready
     $(document).ready(function () {
-        // Validate status form
+
+        var focused = false;
+
+        // When the status box is focused
+        $("#status_box").focus(function() {
+            if (!focused) {
+                $("#status_box").html("");
+                $("#status_box").css("color", "#222");
+                $("#status_box").css("height", "100px");
+                focused = true;
+            }
+        });
+
+        // Validate and submit the status form:
+        // If the user presses enter
         $("#status_form").submit(function () {
-            if (!isEmpty($("#status").val())) {
+            var result = false;
+            // If the status box isn't empty
+            if (!isEmpty($("#status_box").text())) {
                 var result = false;
                 // Add the status through an ajax request to the php file
                 $.ajax({
                     type:  "POST",
                     url:   "add_status.php",
-                    data:  "status=" + $("#status").val(),
+                    data:  "status=" + $.trim($("#status_box").text()),
                     async: false
                 }).done (function (ret) {
                     if (ret == "true") {

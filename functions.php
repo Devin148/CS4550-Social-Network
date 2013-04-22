@@ -107,3 +107,55 @@ function areFriends($user_id, $friend_id) {
         return false;
     }
 }
+
+// Returns the number of friends user with the given id has
+function numFriends($id) {
+    // Connect to the db
+    include ("connect.php");
+
+    // Query number of friends
+    if ($stmt = $mysqli->prepare("SELECT COUNT(*) FROM friends_with WHERE user=?")) {
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($num);
+
+        if ($stmt->fetch()) {
+            $stmt->close();
+            $mysqli->close();
+            return $num;
+        }
+        $stmt->close();
+        $mysqli->close();
+        return 0;
+    } else {
+        // Some sort of exception, return 0
+        $mysqli->close();
+        return 0;
+    }
+}
+
+// Returns the number of statuses user with the given id has
+function numStatuses($id) {
+    // Connect to the db
+    include ("connect.php");
+
+    // Query number of friends
+    if ($stmt = $mysqli->prepare("SELECT COUNT(*) FROM status WHERE author=?")) {
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($num);
+
+        if ($stmt->fetch()) {
+            $stmt->close();
+            $mysqli->close();
+            return $num;
+        }
+        $stmt->close();
+        $mysqli->close();
+        return 0;
+    } else {
+        // Some sort of exception, return 0
+        $mysqli->close();
+        return 0;
+    }
+}
