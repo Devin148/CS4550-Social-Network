@@ -17,6 +17,7 @@ CREATE TABLE users
 	first_name varchar(100) NOT NULL,
 	last_name varchar(100) NOT NULL,
 	address int NOT NULL,
+	image_loc varchar(200) NOT NULL DEFAULT "http://www.swimmfrog.com/images/profile/default_profile.png",
 	FOREIGN KEY (address) REFERENCES address(id),
 	UNIQUE(email)
 );
@@ -36,6 +37,8 @@ CREATE TABLE status
 	author int NOT NULL,
 	content varchar(255) NOT NULL,
 	time timestamp DEFAULT CURRENT_TIMESTAMP,
+	lat varchar(50),
+	long varchar(50),
 	FOREIGN KEY (author) REFERENCES users (id)
 );
 
