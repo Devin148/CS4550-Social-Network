@@ -1,4 +1,5 @@
 <?php
+session_save_path("/home/users/web/b1946/ipg.swimmfrogcom/cgi-bin/tmp");
 session_start();
 // If the session vars are set
 if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {

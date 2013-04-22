@@ -46,16 +46,8 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
                 <h1 class="strong">Northeastern</h1>
                 <h1>Social Network</h1>
 
-                <a href="#" id="login_button" class="large button grey">Login</a>
-                <a href="#" id="sign_up_button" class="large button red">Sign Up</a>
-            </div>
-
-            <div id="login" class="sub_content large right hidden">
-                <?php include ("login_form.php"); ?>
-            </div>
-
-            <div id="sign_up" class="sub_content large right hidden">
-                <?php include ("registration_form.php"); ?>
+                <a href="signin.php" id="login_button" class="large button grey">Login</a>
+                <a href="register.php" id="sign_up_button" class="large button red">Sign Up</a>
             </div>
 
             <div class="clear"></div>
@@ -64,61 +56,6 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
 
     <div id="footer">
     </div>
-
-    <script>
-    // When the document is ready
-    $(document).ready(function () {
-        // Change to the login menu
-        $("#login_button").click(function () {
-            $("#welcome").fadeOut("fast");
-            $("#login").delay(300).fadeIn("fast");
-        });
-
-        // Change to the registration menu
-        $("#sign_up_button").click(function () {
-            $("#welcome").fadeOut("fast");
-            $("#sign_up").delay(300).fadeIn("fast");
-        });
-
-        // Add years to the registration form
-        addYears("year");
-
-        // Validate login form
-        $("#login_form").submit(function () {
-            if (!isFormFilled("login_form")) {
-                return false;
-            }
-            if (!isEmail($("#login_form #email").val())) {
-                alert ("Please enter a valid email!");
-                return false;
-            }
-            return true;
-        });
-
-        // Validate registration form
-        $("#registration_form").submit(function () {
-            if (!isFormFilled("registration_form")) {
-                return false;
-            }
-            if (!isEmail($("#registration_form #email").val())) {
-                alert ("Please enter a valid email!");
-                return false;
-            }
-            if (!isZip($("#registration_form #zip").val())) {
-                alert ("Please enter a valid zip code!");
-                return false;
-            }
-            var day = $("#registration_form #day").val();
-            var month = $("#registration_form #month").val();
-            var year = $("#registration_form #year").val();
-            if (!isOldEnough(day, month, year)) {
-                alert ("You must be at least 18 to sign up!");
-                return false;
-            }
-            return true;
-        });
-    });
-    </script>
 
 </body>
 </html>
