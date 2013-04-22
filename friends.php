@@ -90,6 +90,7 @@ $user = getUser($email);
             ?>
 
         </div>
+        <div class="clear"></div>
     </div>
 </body>
 </html>

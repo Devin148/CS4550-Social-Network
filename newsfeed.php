@@ -132,7 +132,9 @@ $email = $_SESSION["email"];
 
                 // Find the user and fill in the vars
                 if ($stmt = $mysqli->prepare("SELECT first_name, last_name, email
-                                              FROM users ORDER BY RAND() LIMIT 20")) {
+                                              FROM users WHERE id!=? ORDER BY RAND() LIMIT 20")) {
+
+                    $stmt->bind_param('s', $user->getId());
                     $stmt->execute();
                     $stmt->bind_result($rand_first, $rand_last, $rand_email);
                     
@@ -164,6 +166,7 @@ $email = $_SESSION["email"];
         <!-- Clear the floats -->
         <div class="clear"></div>
         </div>
+        <div class="clear"></div>
     </div>
 
     <script>
