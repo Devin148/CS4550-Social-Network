@@ -62,7 +62,7 @@ $user = getUser($email);
                     <!-- Create a status block for them -->
                     <div class="status_wrapper">
                         <div class="profile">
-                            <?php echo "<a href=\"profile.php?email=$author_email\">"; ?>
+                            <?php echo "<a href=\"profile.php?email=$friend_email\">"; ?>
                                 <img src="images/default_profile.png">
                             </a>
                         </div>
@@ -73,12 +73,6 @@ $user = getUser($email);
                             <p>Email: <?php echo $friend_email; ?></p>
                         </div>
                     </div>
-                    <!-- <p>
-                        <a onClick="window.open('http://twitter.com/home?status=<?php echo $twitter_content; ?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');"
-                        href="javascript: void(0)"><img src="images/buttons/twitter.png" /></a>
-                        <a onClick="window.open('http://www.facebook.com/share.php?u=<?php echo $facebook_content; ?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');"
-                        href="javascript: void(0)"><img src="images/buttons/facebook.png" /></a>
-                    </p> -->
 
                 <?php
                 }
