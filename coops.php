@@ -14,12 +14,7 @@ if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
     exit();
 }
 
-// Include functions
-include ("functions.php");
-// Get email
 $email = $_SESSION["email"];
-// Get the user
-$user = getUser($email);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -34,54 +29,50 @@ $user = getUser($email);
 </head>
 
 <body>
+
+    <?php
+
+        include ("functions.php");
+        $email = $_SESSION["email"];
+        $user = getUser($email);
+
+    ?>
+
     <div id="container">
-        <!-- Add the nav and side bars -->
         <?php include ("navbar.php"); ?>
         <?php include ("sidebar.php"); ?>
 
         <div id="large_content">
+            <a href="add_coop.php" style="color: #F00;">+ Add a Co-op</a>
 
-            <!-- Start adding friends -->
             <?php
 
             // Connect to the db
             include ("connect.php");
 
-            // Select all the statuses of people the user is friends with
-            if ($stmt = $mysqli->prepare("SELECT id, email, first_name, last_name, image_loc FROM users
-                                          WHERE id IN (SELECT friend FROM friends_with WHERE user=?)
-                                          ORDER BY first_name desc")) {
-                $stmt->bind_param('s', $user->getId());
+            // Find the user and fill in the vars
+            if ($stmt = $mysqli->prepare("SELECT name, rating, description
+                                          FROM coop WHERE student=?")) {
+
+                $stmt->bind_param('i', $user->getId());
                 $stmt->execute();
-                $stmt->bind_result($id, $friend_email, $first_name, $last_name, $image_loc);
+                $stmt->bind_result($name, $rating, $desc);
                 
-                // Go through all the users friends
                 while ($stmt->fetch()) {
                     ?>
 
-                    <!-- Create a status block for them -->
-                    <div class="status_wrapper">
-                        <div class="profile">
-                            <?php echo "<a href=\"profile.php?email=$friend_email\">"; ?>
-                                <img <?php echo "src=\"$image_loc\""; ?>>
-                            </a>
-                        </div>
-                        <div class="status_top">
-                            <p><?php echo "<h2>" . $first_name . " " . $last_name . "</h2>"; ?></p>
-                        </div>
-                        <div class="status_bot">
-                            <p>Email: <?php echo $friend_email; ?></p>
-                        </div>
-                    </div>
+                    <h1><?php echo $name; ?></h1>
+                    <blockquote><?php echo $desc; ?></blockquote>
+                    <div class="rating"><?php echo $rating; ?>/10</div>
 
-                <?php
+                    <?php
                 }
 
                 // Close the statement
                 $stmt->close();
             } else {
-                // Some sort of error occured
-                print "<h1>Failed to load statuses.</h1>";
+                // Throw exception
+                print "Failed to find random users.";
             }
 
             // Close the connection
@@ -89,8 +80,10 @@ $user = getUser($email);
 
             ?>
 
+
         </div>
         <div class="clear"></div>
     </div>
+
 </body>
 </html>

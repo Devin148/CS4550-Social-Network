@@ -115,6 +115,22 @@ body {
     z-index: 100;
 }
 
+#sidebar li img {
+    min-width: 15px;
+    max-width: 15px;
+    min-height: 15px;
+}
+
+#sidebar li .profile {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #FFF;
+    overflow: hidden;
+    padding: 0;
+    margin: 18px;
+    float: left;
+}
+
 #sidebar li.current {
     background: #ED131C;
 }
@@ -336,7 +352,7 @@ body {
     width: 50px;
     overflow: hidden;
     height: 50px;
-    padding: 5px;
+    margin: 5px;
     float: left;
 }
 
@@ -392,6 +408,20 @@ span.tooltip:after {
     position: relative;
 }
 
+#header .propic {
+    background: rgba(0, 0, 0, .60);
+    color: #FFF;
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    padding: 10px;
+}
+
+#header .propic p {
+    padding: 3px 0;
+    margin: 0;
+}
+
 #header img.cover {
     width: 100%;
     max-height: 275px;
@@ -400,10 +430,11 @@ span.tooltip:after {
 #header .profile {
     width: 175px;
     height: 175px;
+    overflow: hidden;
     border: 5px solid #FFF;
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
+    border-radius: 87px;
+    -webkit-border-radius: 87px;
+    -moz-border-radius: 87px;
     position: absolute;
     top: 125px;
     left: 50px;

@@ -159,3 +159,29 @@ function numStatuses($id) {
         return 0;
     }
 }
+
+// Returns the number of statuses user with the given id has
+function numCoops($id) {
+    // Connect to the db
+    include ("connect.php");
+
+    // Query number of friends
+    if ($stmt = $mysqli->prepare("SELECT COUNT(*) FROM coop WHERE student=?")) {
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($num);
+
+        if ($stmt->fetch()) {
+            $stmt->close();
+            $mysqli->close();
+            return $num;
+        }
+        $stmt->close();
+        $mysqli->close();
+        return 0;
+    } else {
+        // Some sort of exception, return 0
+        $mysqli->close();
+        return 0;
+    }
+}

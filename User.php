@@ -16,6 +16,7 @@ class User {
 	private $city;
 	private $state;
 	private $zip;
+	private $image_loc;
 
 	public function createUserFromEmail($email) {
 		//Set the global email
@@ -25,10 +26,10 @@ class User {
 		include ("connect.php");
 
 		// Find the user and fill in the vars
-		if ($stmt = $mysqli->prepare("SELECT id, dob, first_name, last_name, address FROM users WHERE email=?")) {
+		if ($stmt = $mysqli->prepare("SELECT id, dob, first_name, last_name, address, image_loc FROM users WHERE email=?")) {
 		    $stmt->bind_param('s', $this->email);
 		    $stmt->execute();
-		    $stmt->bind_result($id, $dob, $first_name, $last_name, $address_id);
+		    $stmt->bind_result($id, $dob, $first_name, $last_name, $address_id, $image_loc);
 		    
 		    if ($stmt->fetch()) {
 		    	$this->id = $id;
@@ -36,6 +37,7 @@ class User {
 		    	$this->last_name = $last_name;
 		    	$this->dob = $dob;
 		    	$this->address_id = $address_id;
+				$this->image_loc = $image_loc;
 		    } else {
 		    	// Throw exception
 		    }
@@ -79,10 +81,10 @@ class User {
 		include ("connect.php");
 
 		// Find the user and fill in the vars
-		if ($stmt = $mysqli->prepare("SELECT email, dob, first_name, last_name, address FROM users WHERE id=?")) {
+		if ($stmt = $mysqli->prepare("SELECT email, dob, first_name, last_name, address, image_loc FROM users WHERE id=?")) {
 		    $stmt->bind_param('s', $this->id);
 		    $stmt->execute();
-		    $stmt->bind_result($email, $dob, $first_name, $last_name, $address_id);
+		    $stmt->bind_result($email, $dob, $first_name, $last_name, $address_id, $image_loc);
 		    
 		    if ($stmt->fetch()) {
 		    	$this->email = $email;
@@ -90,6 +92,7 @@ class User {
 		    	$this->last_name = $last_name;
 		    	$this->dob = $dob;
 		    	$this->address_id = $address_id;
+				$this->image_loc = $image_loc;
 		    } else {
 		    	// Throw exception
 		    }
@@ -169,5 +172,9 @@ class User {
 	public function getZip() {
 		return $this->zip;
 	}
-
+	
+	// Return the zip of this user
+	public function getImageLoc() {
+		return $this->image_loc;
+	}
 }

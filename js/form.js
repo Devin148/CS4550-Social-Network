@@ -21,7 +21,8 @@ function isFormFilled(formId) {
     var valid = true;
     var query = "#" + formId + " :text," +
                 "#" + formId + " :password," + 
-                "#" + formId + " select";
+                "#" + formId + " select," + 
+                "#" + formId + " textarea";
     $(query).each(function() {
         if ($(this).val() == null || $(this).val() == '') {
             valid = false;

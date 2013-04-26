@@ -1,5 +1,4 @@
 <?php
-session_save_path("/home/users/web/b1946/ipg.swimmfrogcom/cgi-bin/tmp");
 session_start();
 // If the session vars are set
 if (isset($_SESSION["logged_in"]) && isset($_SESSION["email"])) {
@@ -52,6 +51,7 @@ $city = $user->getCity();
 $state = $user->getState();
 $zip = $user->getZip();
 $id = $user->getId();
+$image_loc = $user->getImageLoc();
 
 ?>
 
@@ -114,7 +114,19 @@ $id = $user->getId();
         <div id="large_content">
             <div id="header">
                 <img src="images/profile/cover.png" class="cover" />
-                <img src="images/default_profile.png" class="profile" />
+
+                <?php if($your_profile) { ?>
+                    <div class="propic">
+                        <form action='upload.php' method='POST' enctype='multipart/form-data'>
+                            <p>Choose a Profile Picture:</p>
+                            <input type='file' name="file" size="5">
+                            <input type='submit' name='submit' value='Upload'>
+                        </form>
+                    </div>
+                <?php } ?>
+                <div class="profile">
+                    <img <?php echo "src=\"$image_loc\""; ?> />
+                </div>
                 <div id="name">
                     <h1><?php echo $first_name . " " . $last_name; ?></h1>
                     <h2><?php echo $street . " " . $city . ", " . $state; ?></h2>
@@ -124,9 +136,11 @@ $id = $user->getId();
                         <ul>
                             <li>
                                 <div class="fui-man-24"></div>
-                                <?php echo numFriends($id); ?></li>
+                                <?php echo numFriends($id); ?>
+                            </li>
                             <li>
                                 <div class="fui-heart-24"></div>
+                                <?php echo numCoops($id); ?>
                             </li>
                             <li>
                                 <div class="fui-new-24"></div>
